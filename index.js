@@ -16,7 +16,7 @@ app.get("/api/:table", async (req, res) => {
     let records = [], offset = null;
     do {
       const qs = offset ? `?offset=${offset}` : "";
-      const r = await fetch(`${BASE_URL}/${encodeURIComponent(req.params.table)}${qs}`, { headers: HEADERS });
+      const r = await fetch(`${BASE_URL}/${req.params.table}${qs}`, { headers: HEADERS });
       const data = await r.json();
       if (data.error) return res.status(400).json(data);
       records = records.concat(data.records || []);
