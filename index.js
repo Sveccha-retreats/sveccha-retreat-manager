@@ -30,7 +30,7 @@ app.get("/api/:table", async (req, res) => {
 
 app.post("/api/:table", async (req, res) => {
   try {
-    const r = await fetch(`${BASE_URL}/${encodeURIComponent(req.params.table)}`, {
+    const r = await fetch(`${BASE_URL}/${req.params.table}`, {
       method: "POST", headers: HEADERS, body: JSON.stringify({ fields: req.body.fields })
     });
     res.json(await r.json());
