@@ -39,11 +39,16 @@ app.get("/api/:table", async (req, res) => {
 
 app.post("/api/:table", async (req, res) => {
   try {
+    const body = JSON.stringify({ fields: req.body.fields });
+    console.log("POST to", req.params.table, body);
     const r = await fetch(`${BASE_URL}/${req.params.table}`, {
-      method: "POST", headers: HEADERS, body: JSON.stringify({ fields: req.body.fields })
+      method: "POST", headers: HEADERS, body
     });
-    res.json(await r.json());
+    const data = await r.json();
+    if (data.error) console.error("Airtable POST error:", JSON.stringify(data));
+    res.json(data);
   } catch (e) {
+    console.error("POST error:", e.message);
     res.status(500).json({ error: { message: e.message } });
   }
 });
@@ -64,7 +69,7 @@ app.post("/notify", async (req, res) => {
     const { name, email, phone, ecName, ecPhone, dietary, medical } = req.body;
     await transporter.sendMail({
       from: "tory@indianpondbarbados.com",
-      to: "tory.miell@me.com",
+      to: "tory@indianpondbarbados.com",
       subject: `New retreat registration: ${name}`,
       html: `
         <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px; background: #F7F3EE;">
