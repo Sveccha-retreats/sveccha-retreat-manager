@@ -126,4 +126,6 @@ app.post("/notify-private", async (req, res) => {
   }
 });
 
+app.use('/api/invoice', require('./routes/invoice'));
+
 app.listen(process.env.PORT || 3000, () => console.log("Sveccha server running"));
