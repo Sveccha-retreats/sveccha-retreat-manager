@@ -1,3 +1,4 @@
+   require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const fetch = (...args) => import("node-fetch").then(({ default: f }) => f(...args));
@@ -15,8 +16,8 @@ const HEADERS = { "Authorization": `Bearer ${API_KEY}`, "Content-Type": "applica
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "tory@indianpondbarbados.com",
-    pass: "sicu rofq ekdu mkoq"
+           user: process.env.GMAIL_USER,
+       pass: process.env.GMAIL_APP_PASSWORD
   }
 });
 
@@ -69,7 +70,7 @@ app.post("/notify", async (req, res) => {
     const { name, email, phone, ecName, ecPhone, dietary, medical } = req.body;
     await transporter.sendMail({
       from: "tory@indianpondbarbados.com",
-      to: "tory@indianpondbarbados.com",
+             to: "hello@svecchayoga.com",
       subject: `New retreat registration: ${name}`,
       html: `
         <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px; background: #F7F3EE;">
