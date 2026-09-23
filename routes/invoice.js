@@ -6,8 +6,8 @@ const { generateInvoice } = require('../invoiceGenerator');
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'tory@indianpondbarbados.com',
-    pass: 'sicu rofq ekdu mkoq'
+           user: process.env.GMAIL_USER,
+       pass: process.env.GMAIL_APP_PASSWORD
   }
 });
 
